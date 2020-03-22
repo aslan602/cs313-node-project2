@@ -7,11 +7,23 @@
     <script src="desktop.js"></script>
     <title>Desktop Web Page</title>
 </head>
-<body>
-    <h1>This is the start of my desktop webpage</h1><br /><br />
-    <p id=weather></p><br /><br />
-    <input type="button" id="getweather" value="Get Weather" onclick="startWeatherRequest()">
-
+<body onload="start()">
+    <div class="grid-container">
+        <div class="item1">
+            <h1 class="center green">Weather</h1><br />            
+            <h1 class="center green">For the city of </h1>
+            <h1 id="city" class="green center"></h1><br />
+            <p class="green"><b>Current Temp: </b></p><span class="green" id="current"></span><br />
+            <p class="green"><b>Minimun Temp: </b></p><span class="green" id="min"></span><br />
+            <p class="green"><b>Maximun Temp: </b></p><span class="green" id="max"></span><br />
+            <p class="green"><b>Humidity: </b></p><span class="green" id="humidity"></span><br />
+            <p class="green"><b>Description: </b></p><span class="green" id="description"></span>           
+        </div>
+        <div class="item2">
+            <p class="red time" id="time"></p>
+        </div>
+        <div class="item3">Bottom</div> 
+    
 
 </body>
 </html>

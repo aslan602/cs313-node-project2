@@ -2,10 +2,43 @@ body {
    background-color: lightyellow;
 }
 
-h1 {
-    text-align: center;
-    font-size: large;
+.item1 { grid-area: left; }
+.item2 { grid-area: right; }
+.item3 { grid-area: bottom; }
+
+.grid-container {
+  display: grid;
+  height: 50vw;
+  width: 99vw;
+  grid-template-areas:
+   'left right'
+   'bottom bottom';
+  grid-gap: 1vw;
+  background-color: #F1C40F;
+  padding: 1vw;
 }
 
+.grid-container > div {
+  background-color: #FCF3CF;  
+}
 
+.center {
+    text-align: center;
+}
+
+.green {
+    color: #0E6655;
+}
+
+.indent {
+    text-indent: 1vw;
+}
+
+.red {
+    color: #B03A2E;
+}
+
+.time {    
+    text-align: center;
+}
 

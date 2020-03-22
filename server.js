@@ -1,8 +1,9 @@
 var express = require("express");
 const https = require("https");
+const http = require("http");
 var app = express();
 app.set("port", (process.env.PORT || 5000))
-app.set("views", "views");
+app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.listen(app.get("port"), function() {
     console.log("The server is up and listening on port: ", app.get("port"));
@@ -12,32 +13,77 @@ app.use(express.static("public"));
 
 app.get("/getweather", getWeatherAPI);
 
+app.get("/gettime", gettimeAPI);
 
-function getWeatherAPI(req, res) {   
-    var url = "https://api.openweathermap.org/data/2.5/weather?q=phoenix&appid=abdd025a60e75fe58a73ce60d22316c7";
-    var options = {json: true};
 
-    https.get(url, (response) => {
-       var body = '';
+function getWeatherAPI(req, res) {
+    var data = "";   
+    var url = "https://api.openweathermap.org/data/2.5/weather?q=phoenix&units=imperial&appid=abdd025a60e75fe58a73ce60d22316c7";    
 
-       response.on("data", (chunk) => {
-           body += chunk;
+    req.on("error", (e) => {
+        console.error(e);
+        res.end();
+    });
+
+    req = https.get(url, (response) => {
+       var body = '';       
+       console.log("StatusCode: ", response.statuscode);
+       console.log("Headers: ", response.headers);
+
+       response.on('data', (d) => {           
+           body += d;
        });
 
-       response.on("end", () => {
-           try {
-               let json = JSON.parse(body);
-               sendWeather(res, json);
+       response.on('error', (e) => {
+           console.error(e);           
+       });
+
+       response.on('end', () => {
+            try {                            
+               data = JSON.parse(body); 
+               console.log(data);                              
+               res.send(JSON.stringify(data));  
+               res.end();                                                    
            } catch (error) {
                console.error(error.message);
            };
-       });       
-    });    
+       });                 
+    }); 
+    
 }
 
-function sendWeather(res, data) {
-    res.render(JSON.stringify(data));
-    res.end();
-}
+function gettimeAPI(request, response) {
+    var datatime = "";
+    var url = "http://worldtimeapi.org/api/timezone/America/Phoenix";
 
+    request.on("error", (e) => {
+        console.error(e);
+        response.end();
+    });
+
+    request = http.get(url, (res) => {
+        var body = '';       
+       console.log("StatusCode: ", res.statuscode);
+       console.log("Headers: ", res.headers);
+
+       res.on('data', (d) => {           
+           body += d;
+       });
+
+       res.on('error', (e) => {
+           console.error(e);           
+       });
+
+       res.on('end', () => {
+            try { 
+               datatime = JSON.parse(body);               
+               console.log(body);                                         
+               response.send(JSON.stringify(datatime));  
+               response.end();                                                    
+           } catch (error) {
+               console.error(error.message);
+           };
+       });
+    });
+}
 
