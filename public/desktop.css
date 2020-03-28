@@ -27,6 +27,7 @@ body {
 }
 
 .green {
+    
     color: #0E6655;
 }
 
@@ -38,7 +39,21 @@ body {
     color: #B03A2E;
 }
 
-.time {    
+.time {
+    padding-top: 10vw;    
     text-align: center;
+    font-size: 6vw;
+}
+
+.big {
+    font-size: 1.3vw;
+}
+
+.bigger {
+    font-size: 2vw;
+}
+
+.alignCenter {
+   padding-left: 35vw;     
 }
 

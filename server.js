@@ -40,9 +40,9 @@ function getWeatherAPI(req, res) {
 
        response.on('end', () => {
             try {                            
-               data = JSON.parse(body); 
+               data = body; 
                console.log(data);                              
-               res.send(JSON.stringify(data));  
+               res.send(data);  
                res.end();                                                    
            } catch (error) {
                console.error(error.message);
@@ -53,6 +53,9 @@ function getWeatherAPI(req, res) {
 }
 
 function gettimeAPI(request, response) {
+    var d = "";
+    var e = "";
+    var body = "";
     var datatime = "";
     var url = "http://worldtimeapi.org/api/timezone/America/Phoenix";
 
@@ -61,8 +64,7 @@ function gettimeAPI(request, response) {
         response.end();
     });
 
-    request = http.get(url, (res) => {
-        var body = '';       
+    request = http.get(url, (res) => {              
        console.log("StatusCode: ", res.statuscode);
        console.log("Headers: ", res.headers);
 
@@ -77,13 +79,15 @@ function gettimeAPI(request, response) {
        res.on('end', () => {
             try { 
                datatime = JSON.parse(body);               
-               console.log(body);                                         
-               response.send(JSON.stringify(datatime));  
+               console.log(body); 
+               console.log(datatime);
+               console.log(datatime.datetime);                                        
+               response.send(JSON.stringify(datatime.datetime));  
                response.end();                                                    
            } catch (error) {
                console.error(error.message);
            };
        });
-    });
+    });    
 }
 
