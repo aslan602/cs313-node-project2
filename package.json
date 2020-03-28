@@ -13,5 +13,14 @@
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "pg": "^7.18.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aslan602/cs313-node-project2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aslan602/cs313-node-project2/issues"
+  },
+  "homepage": "https://github.com/aslan602/cs313-node-project2#readme"
 }
