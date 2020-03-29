@@ -15,10 +15,10 @@ app.get("/getweather", getWeatherAPI);
 
 app.get("/gettime", gettimeAPI);
 
-
 function getWeatherAPI(req, res) {
+    var city = req.query.city;
     var data = "";   
-    var url = "https://api.openweathermap.org/data/2.5/weather?q=phoenix&units=imperial&appid=abdd025a60e75fe58a73ce60d22316c7";    
+    var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=abdd025a60e75fe58a73ce60d22316c7";    
 
     req.on("error", (e) => {
         console.error(e);
@@ -53,11 +53,12 @@ function getWeatherAPI(req, res) {
 }
 
 function gettimeAPI(request, response) {
+    var city = request.query.city;
     var d = "";
     var e = "";
     var body = "";
     var datatime = "";
-    var url = "http://worldtimeapi.org/api/timezone/America/Phoenix";
+    var url = "http://worldtimeapi.org/api/timezone/America/" + city;
 
     request.on("error", (e) => {
         console.error(e);
@@ -90,4 +91,5 @@ function gettimeAPI(request, response) {
        });
     });    
 }
+
 

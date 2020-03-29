@@ -1,11 +1,11 @@
 //javascript
 
 function start() {
-    startWeatherRequest();
-    gettime();
+    SameSite=
+    checkCookie();
 }
 
-function startWeatherRequest() {    
+function startWeatherRequest(city) {    
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.status == 200) {            
@@ -14,7 +14,7 @@ function startWeatherRequest() {
             displayweather(weather);          
         }
     };
-    xhttp.open("GET", "/getweather", true);
+    xhttp.open("GET", "/getweather?" + city, true);
     xhttp.send();
     return;
 }
@@ -37,7 +37,7 @@ function displayweather(weather) {
     return;     
 }
 
-function gettime() {    
+function gettime(city) {    
     var time;
     console.log("Entered gettime");
     var xtime = new XMLHttpRequest();
@@ -47,7 +47,7 @@ function gettime() {
             console.log(time);
             displaytime(time);
     };
-    xtime.open("GET", "/gettime", true);        
+    xtime.open("GET", "/gettime?" + city, true);        
     xtime.send();
     return;  
 }
@@ -185,6 +185,37 @@ function keeptime() {
     document.getElementById("time").innerHTML = d.toLocaleTimeString();
 }
 
+function changeCity() {
+    console.log("Change city was entered!");
+    document.getElementById("citytext").style.visibility = "visible";
+    document.getElementById("getcity").style.visibility = "visible";   
+}
 
+function checkCookie() {
+    var c = document.cookie;
+    if (c == null || c == "") {
+        console.log("No cookie found!");
+        document.cookie = "city=Phoenix;SameSite=Lax";
+        start();
+    }
+    else {
+        console.log(c);
+        startWeatherRequest(c);
+        gettime(c);
+    }
+}
+
+function sendcity() {
+    var city = document.getElementById("citytext").value;
+    if (city == null || city == "") {
+        console.log("Error with entering city!");
+        start();
+    }
+    document.cookie = "city=;SameSite=Lax";
+    document.cookie = "city=" + city + ";SameSite=Lax";
+    document.getElementById("citytext").style.visibility = "hidden";
+    document.getElementById("getcity").style.visibility = "hidden";
+    start();
+}
 
 

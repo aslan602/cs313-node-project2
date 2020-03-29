@@ -11,16 +11,18 @@
     <div class="grid-container">
         <div class="item1">
             <h1 class="center green bigger">Weather</h1><br />            
-            <h1 class="center green bigger">For the city of </h1>
-            <h1 id="city" class="green center bigger"></h1><br />
-            <p class="green big"><b>Current Temp: </b></p><span class="green big" id="current"></span><br />
-            <p class="green big"><b>Minimun Temp: </b></p><span class="green big" id="min"></span><br />
-            <p class="green big"><b>Maximun Temp: </b></p><span class="green big" id="max"></span><br />
-            <p class="green big"><b>Humidity: </b></p><span class="green big" id="humidity"></span><br />
-            <p class="green big"><b>Description: </b></p><span class="green big" id="description"></span>           
+            <h1 class="center green bigger">For the city of <span id="city" class="green center bigger"></span></h1><br />
+            <p class="green big"><b>Current Temp: </b><span class="green big" id="current"></span></p><br />
+            <p class="green big"><b>Minimun Temp: </b><span class="green big" id="min"></span></p><br />
+            <p class="green big"><b>Maximun Temp: </b><span class="green big" id="max"></span></p><br />
+            <p class="green big"><b>Humidity: </b><span class="green big" id="humidity"></span></p><br />
+            <p class="green big"><b>Description: </b><span class="green big" id="description"></span></p>           
         </div>
-        <div class="item2">
-            <p class="red time" id="time"></p>
+        <div class="item2 center">
+            <p class="red time" id="time"></p><br />
+            <input type="button" class="button" value="Change Cities" onclick="changeCity()"><br /><br />
+            <input type="text" id="citytext" placeholder="Enter City" class="cityinput white">
+            <input type="button" id="getcity" value="Enter" class="cityinput" onclick="sendcity()">
         </div>
         <div class="item3 alignCenter">
             <img src="https://picsum.photos/400" alt="Random Picture">

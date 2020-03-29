@@ -1,5 +1,5 @@
 body {
-   background-color: lightyellow;
+   background-color: #F1C40F;
 }
 
 .item1 { grid-area: left; }
@@ -8,7 +8,7 @@ body {
 
 .grid-container {
   display: grid;
-  height: 50vw;
+  height: 30vw;
   width: 99vw;
   grid-template-areas:
    'left right'
@@ -40,20 +40,33 @@ body {
 }
 
 .time {
-    padding-top: 10vw;    
+    padding-top: 5vw;    
     text-align: center;
     font-size: 6vw;
 }
 
 .big {
-    font-size: 1.3vw;
+    font-size: 1vw;
 }
 
 .bigger {
-    font-size: 2vw;
+    font-size: 1.5vw;
 }
 
 .alignCenter {
    padding-left: 35vw;     
 }
 
+.button {
+    font-size: 2vw;
+    color: #FCF3CF;
+    background-color: #0E6655;    
+}
+
+.cityinput {
+    visibility: hidden;
+}
+
+.white {
+    background-color: white;
+}
