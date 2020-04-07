@@ -53,7 +53,9 @@ function getWeatherAPI(req, res) {
 }
 
 function gettimeAPI(request, response) {
-    var city = request.query.city;
+    var city = request.query.city;       
+    console.log("GettimeAPI city = " + city);
+    var offset = 0;
     var d = "";
     var e = "";
     var body = "";
@@ -82,8 +84,12 @@ function gettimeAPI(request, response) {
                datatime = JSON.parse(body);               
                console.log(body); 
                console.log(datatime);
-               console.log(datatime.datetime);                                        
-               response.send(JSON.stringify(datatime.datetime));  
+               console.log(datatime.datetime);
+               console.log(datatime.utc_offset);
+               offset = getOffsetNumber(datatime.utc_offset);
+               console.log("The city is: " + city); 
+               console.log("The sending offset number is: " + offset);                                                   
+               response.send(JSON.stringify(offset));  
                response.end();                                                    
            } catch (error) {
                console.error(error.message);
@@ -92,4 +98,84 @@ function gettimeAPI(request, response) {
     });    
 }
 
+function getOffsetNumber(string) {
+    var offsetReturnNumber = 0;
+    switch (string) {
+        case "+12:00":
+            offsetReturnNumber = 12;
+            break;
+        case "+11:00":
+            offsetReturnNumber = 11;
+            break;
+        case "+10:00":
+            offsetReturnNumber = 10;
+            break;
+        case "+09:00":
+            offsetReturnNumber = 9;
+            break;
+        case "+08:00":
+            offsetReturnNumber = 8;
+            break;
+        case "+07:00":
+            offsetReturnNumber = 7;
+            break;
+        case "+06:00":
+            offsetReturnNumber = 6;
+            break;
+        case "+05:00":
+            offsetReturnNumber = 5;
+            break;
+        case "+04:00":
+            offsetReturnNumber = 4;
+            break;
+        case "+03:00":
+            offsetReturnNumber = 3;
+            break;
+         case "+02:00":
+             offsetReturnNumber = 2;
+             break;
+        case "+01:00":
+            offsetReturnNumber = 1;
+            break;
+        case "+00:00":
+            offsetReturnNumber = 0;
+            break;
+        case "-01:00":
+            offsetReturnNumber = -1;
+            break;
+        case "-02:00":
+            offsetReturnNumber = -2;
+            break;
+        case "-03:00":
+            offsetReturnNumber = -3;
+            break;
+        case "-04:00":
+            offsetReturnNumber = -4;
+            break;
+        case "-05:00":
+            offsetReturnNumber = -5;
+            break;        
+        case "-06:00":
+            offsetReturnNumber = -6;
+            break;
+        case "-07:00":
+            offsetReturnNumber = -7;
+            break;
+        case "-08:00":
+            offsetReturnNumber = -8;
+            break;
+        case "-09:00":
+            offsetReturnNumber = -9;
+            break;
+        case "-10:00":
+            offsetReturnNumber = -10;
+            break;
+        case "-11:00":
+            offsetReturnNumber = -11;
+            break;       
+        default:
+            offsetReturnNumber = 0;
+    }
+    return offsetReturnNumber;
+}
 

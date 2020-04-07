@@ -40,9 +40,9 @@ body {
 }
 
 .time {
-    padding-top: 5vw;    
+    padding-top: .3vw;    
     text-align: center;
-    font-size: 6vw;
+    font-size: 4vw;
 }
 
 .big {
@@ -69,4 +69,16 @@ body {
 
 .white {
     background-color: white;
+}
+
+.toppad {
+    padding-top: .3vw;
+}
+
+.biggest {
+    font-size: 1.5vw;
+}
+
+.small {
+    font-size: .7vw;
 }

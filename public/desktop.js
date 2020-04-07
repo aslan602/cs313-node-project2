@@ -1,11 +1,12 @@
 //javascript
 
 function start() {
-    SameSite=
+    
     checkCookie();
 }
 
-function startWeatherRequest(city) {    
+function startWeatherRequest(city) { 
+    city = city.replace("_", " ");   
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.status == 200) {            
@@ -15,8 +16,7 @@ function startWeatherRequest(city) {
         }
     };
     xhttp.open("GET", "/getweather?" + city, true);
-    xhttp.send();
-    return;
+    xhttp.send();    
 }
 
 function displayweather(weather) {
@@ -33,172 +33,207 @@ function displayweather(weather) {
     document.getElementById("min").innerHTML = min;
     document.getElementById("max").innerHTML = max;
     document.getElementById("humidity").innerHTML = humidity;
-    document.getElementById("description").innerHTML = description
-    return;     
+    document.getElementById("description").innerHTML = description;        
 }
 
-function gettime(city) {    
-    var time;
-    console.log("Entered gettime");
+function gettime(city) {      
+    var time = 0;
+    var i;
+    console.log("Entered gettime");  
+    var justcity = "";
+    for (i = 0; i < city.length; i++) {
+        if (i > 4) {           
+            justcity += city[i];           
+        }
+    }
+    if (justcity == "" || justcity == null) {
+        city = document.cookie;
+        gettime(city);
+    }   
+    console.log("Justcity: " + justcity);
+    document.getElementById("citytime").innerHTML = justcity;    
     var xtime = new XMLHttpRequest();
-    xtime.onreadystatechange = function() {       
-            console.log("xtime status: " + this.status);
-            time = this.responseText;            
-            console.log(time);
-            displaytime(time);
-    };
+    xtime.onreadystatechange = function() {
+        time = this.responseText;
+        console.log("The response is " + time);
+        displaytime(time);
+    };      
+           
+                              
+           
     xtime.open("GET", "/gettime?" + city, true);        
-    xtime.send();
-    return;  
+    xtime.send();    
 }
 
 function displaytime(string) {
-    console.log("Entered displaytime");  
-    console.log(string);
-    console.log(string.length);
-    var hour = "";
-    var minute = "";
-    var second = "";
-    var hours;
-    var minutes;
-    var seconds;
-    var m = "";
+    var interval; 
+    var offset = 0;
+    offset = Number(string);   
+    console.log("Entered displaytime and string is: " + offset);   
+    if (offset == null || offset == "" || isNaN(offset)) {    
+        console.log("There is no time offset! ERROR!");
+        return;
+    }
+    if (offset < -11 || offset > 12) {
+        console.log("The value coming in to displaytime is out of range! ERROR!");
+        return;
+    }
     var i;
-    var x;
-    var time = ""; 
-    // Get time from string    
-    for (i = 0; i < 21; i++) {
-        if (string[i] == 'T') {
-            for (x = i + 1; x < i + 9; x++) {
-                time += string[x];
-            }
-        }
+    const date = new Date()
+    const map = new Map([
+    [-11, 'Pacific/Niue'],
+    [-10, 'Pacific/Tahiti'],
+    [-9, 'Pacific/Gambier'],
+    [-8, 'Pacific/Pitcairn'],
+    [-7, 'America/Vancouver'],
+    [-6, 'America/Denver'],
+    [-5, 'America/Rio_Branco'],
+    [-4, 'America/Manaus'],
+    [-3, 'America/Cayenne'],
+    [-2, 'Atlantic/South_Georgia'],
+    [-1, 'Atlantic/Azores'],
+    [0, 'GMT'],
+    [1, 'Europe/Brussels'],
+    [2, 'Europe/Helsinki'],
+    [3, 'Asia/Riyadh'],
+    [4, 'Asia/Dubai'],
+    [5, 'Asia/Tashkent'],
+    [6, 'Asia/Urumqi'],
+    [7, 'Asia/Bangkok'],
+    [8, 'Asia/Singapore'],
+    [9, 'Asia/Chita'],
+    [10, 'Pacific/Chuuk'],
+    [11, 'Pacific/Pohnpei'],
+    [12, 'Pacific/Wake'],
+    ])
+    
+    switch (offset) {
+        case 12:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(12)});
+            clearInterval(interval);  
+            break;
+        case 11:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(11)});
+            clearInterval(interval);  
+            break;
+        case 10:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(10)});
+            clearInterval(interval);  
+            break;
+        case 9:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(9)});
+            clearInterval(interval);  
+            break;
+        case 8:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(8)}); 
+            clearInterval(interval); 
+            break;
+        case 7:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(7)});
+            clearInterval(interval);  
+            break;
+        case 6:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(6)});
+            clearInterval(interval);  
+            break;
+        case 5:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(5)});
+            clearInterval(interval);  
+            break;
+        case 4:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(4)});
+            clearInterval(interval);  
+            break;
+        case 3:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(3)});
+            clearInterval(interval);  
+            break;
+        case 2:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(2)});
+            clearInterval(interval);  
+            break;
+        case 1:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(1)});
+            clearInterval(interval);  
+            break;
+        case 0:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(0)});
+            clearInterval(interval);   
+            break;
+        case -1:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-1)});
+            clearInterval(interval);  
+            break;
+        case -2:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-2)});
+            clearInterval(interval); 
+            break;
+        case -3:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-3)});
+            clearInterval(interval);  
+            break;
+        case -4:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-4)});
+            clearInterval(interval);  
+            break;
+        case -5:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-5)});
+            clearInterval(interval);  
+            break;
+        case -6:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-6)});
+            clearInterval(interval);  
+            break;
+        case -7:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-7)});
+            clearInterval(interval);   
+            break;
+        case -8:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-8)});
+            clearInterval(interval);  
+            break;
+        case -9:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-9)});
+            clearInterval(interval);  
+            break;
+        case -10:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-10)});
+            clearInterval(interval);  
+            break;
+        case -11:
+            document.getElementById("time").innerHTML = date.toLocaleTimeString('en-US', {timeZone: map.get(-11)});
+            clearInterval(interval);
+            break;
+        default:
+            console.log("ERROR! Using default display setting!  String is: " + offset);
+            clearInterval(interval);                  
     }
-    //Get hours, minutes, and seconds from string
-    for (i = 0; i <= 1; i++) {
-        hour += time[i];
-        hours = Number(hour);
-    }
-    for (i = 3; i <= 4; i++) {
-        minute += time[i];
-        minutes = Number(minute);
-    }
-    if (minutes < 10) {
-        switch (minutes) {
-            case 0:
-                minutes = "00";
-                break;
-            case 1:
-                minutes = "01";
-                break;
-            case 2:
-                minutes = "02";
-                break;
-            case 3:
-                minutes = "03";
-                break;
-            case 4:
-                minutes = "04";
-                break;
-            case 5:
-                minutes = "05";
-                break;
-            case 6:
-                mintues = "06";
-                break;
-            case 7:
-                minutes = "07";
-                break;
-            case 8:
-                minutes = "08";
-                break;
-            case 9:
-                minutes = "09"
-                break;
-            default:
-                minutes = "00";
-        }
-    }
-    for (i = 6; i <= 7; i++) {
-        second += time[i];
-        seconds = Number(second);
-    }
-    if (seconds < 10) {
-        switch (seconds) {
-            case 0:
-                seconds = "00";
-                break;
-            case 1:
-                seconds = "01";
-                break;
-            case 2:
-                seconds = "02";
-                break;
-            case 3:
-                seconds = "03";
-                break;
-            case 4:
-                seconds = "04";
-                break;
-            case 5:
-                seconds = "05";
-                break;
-            case 6:
-                seconds = "06";
-                break;
-            case 7:
-                seconds = "07";
-                break;
-            case 8:
-                seconds = "08";
-                break;
-            case 9:
-                seconds = "09"
-                break;
-            default:
-                seconds = "00";
-        }
-    }
-    //Get 24 time to 12 hour time
-    if (hours >= 12) {
-        m = "PM";
-        if (hours > 12)
-           hours = hours - 12;
-    }
-    else {
-        m = "AM";
-    }
-    //Send the correct time to the display
-    time = hours + ":" + minutes + ":" + seconds + " " + m;
-    document.getElementById("time").innerHTML = time;
-    rolltime();   
-    return;
-}
-
-
-function rolltime() {
-    setInterval(keeptime, 1000);
+     
+    interval = setInterval(function() {displaytime(offset)}, 1000);     
 }
 
 function keeptime() {
-    var d = new Date();
-    document.getElementById("time").innerHTML = d.toLocaleTimeString();
+    var currenttime = "";
+    console.log("Entered Keeptime");
+    currenttime = document.getElementById("time").value;
+    console.log(currenttime);    
 }
 
 function changeCity() {
     console.log("Change city was entered!");
+    document.getElementById("message").style.visibility = "visible";
     document.getElementById("citytext").style.visibility = "visible";
     document.getElementById("getcity").style.visibility = "visible";   
 }
 
-function checkCookie() {
+function checkCookie() {    
     var c = document.cookie;
     if (c == null || c == "") {
         console.log("No cookie found!");
         document.cookie = "city=Phoenix;SameSite=Lax";
         start();
     }
-    else {
+    else {        
         console.log(c);
         startWeatherRequest(c);
         gettime(c);
@@ -213,9 +248,12 @@ function sendcity() {
     }
     document.cookie = "city=;SameSite=Lax";
     document.cookie = "city=" + city + ";SameSite=Lax";
+    document.getElementById("message").style.visibility = "hidden";
     document.getElementById("citytext").style.visibility = "hidden";
     document.getElementById("getcity").style.visibility = "hidden";
-    start();
+    window.location.reload(true);
 }
+
+
 
 
